@@ -1,0 +1,7 @@
+{
+  "name": "CashRegisterNStock.Ionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
