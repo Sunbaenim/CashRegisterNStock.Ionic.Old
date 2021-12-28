@@ -4,8 +4,12 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '',
+    redirectTo: 'catalog',
     pathMatch: 'full'
+  },
+  {
+    path: 'catalog',
+    loadChildren: () => import('./features/pages/catalog/catalog.module').then( m => m.CatalogPageModule)
   },
 ];
 

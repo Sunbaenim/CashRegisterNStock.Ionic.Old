@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>catalog</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="catalog">
+    <ion-grid>
+      <ion-row *ngFor="let category of catalog">
+        <ion-row class="category" *ngIf="category.products.length !== 0">
+          <ion-col>
+            <span class="category-name">{{category.name}}</span>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col #product class="product-container" *ngFor="let product of category.products">
+            <div class="product" [ngStyle]="{'background-image': 'url(' + baseUrl + product.imageURL + ')'}">
+              <div class="overlay"></div>
+              <div class="product-banner">
+                  <span div class="product-name">{{product.name}}</span>
+                  <br>
+                  <span class="product-desc">{{product.description}}</span>
+                  <span class="product-price">{{product.price}}€</span>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>
