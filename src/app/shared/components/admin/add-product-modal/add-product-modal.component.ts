@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { CategoryIndexPostProductModel } from 'src/app/core/models/category/category-index-post-product.model';
 import { CategoryService } from './../../../../core/services/category.service';
@@ -16,11 +17,14 @@ export class AddProductModalComponent implements OnInit {
   @Output() closeModalEvent = new EventEmitter<boolean>();
 
   productFormGroup: FormGroup = this.formBuilder.group({});
-  addChoiceFormGroup: FormGroup = this.formBuilder.group({});
+  categoryFormGroup: FormGroup = this.formBuilder.group({});
 
   categories: CategoryIndexPostProductModel[] = [];
 
+  choices: string[] = ['Produit', 'Catégorie'];
+
   constructor(
+    public addProductModalController: ModalController,
     private formBuilder: FormBuilder,
     private cService: CategoryService,
     private pService: ProductService
@@ -29,11 +33,11 @@ export class AddProductModalComponent implements OnInit {
   ngOnInit() {
     this.getCategories();
     this.loadproductFormGroup();
+    this.loadCategoryFormGroup();
   }
 
-  closeModal() {
-    this.openModal = false;
-    this.closeModalEvent.emit(false);
+  dismiss() {
+    this.addProductModalController.dismiss();
   };
 
   loadproductFormGroup() {
@@ -47,12 +51,22 @@ export class AddProductModalComponent implements OnInit {
     });
   };
 
+  loadCategoryFormGroup() {
+    this.categoryFormGroup = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.maxLength(50)]]
+    });
+  };
+
   getCategories() {
     this.cService.read().subscribe(data => this.categories = data);
   };
 
   addProduct() {
     this.pService.create(this.productFormGroup.value).subscribe();
+  };
+
+  addCategory() {
+    this.cService.create(this.categoryFormGroup.value).subscribe();
   };
 
   loadFile(ev) {

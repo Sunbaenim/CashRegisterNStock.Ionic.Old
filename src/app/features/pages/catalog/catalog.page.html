@@ -30,12 +30,10 @@
     </ion-grid>
   </div>
 
-  <ion-fab *ngIf="userLevel === 'Admin'" (click)="isModalOpen = !isModalOpen" horizontal="end" vertical="bottom" slot="fixed">
+  <ion-fab *ngIf="userLevel === 'Admin'" (click)="presentModal()" horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button color="danger">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
-  <app-add-product-modal [openModal]="isModalOpen" (closeModalEvent)="isModalOpen = $event"></app-add-product-modal>
 
 </ion-content>

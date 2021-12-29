@@ -1,8 +1,16 @@
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  ion-input, ion-select {
+ion-content {
+  #choiceSelect {
+    margin: 60px auto;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    > ion-button {
+      margin-top: 40px;
+    }
+  }
+  form ion-input, ion-select {
     width: 75%;
     margin: 10px 0;
     background-color: #EEE;
