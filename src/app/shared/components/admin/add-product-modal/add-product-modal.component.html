@@ -6,6 +6,27 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-    </ion-content>
-  </ng-template>
-</ion-modal>
+
+      <form [formGroup]="productFormGroup" (ngSubmit)="addProduct()">
+
+        <ion-input type="text" formControlName="name" placeholder="Nom du produit"></ion-input>
+
+        <ion-select formControlName="categoryId" interface="popover" placeholder="Catégorie">
+          <ion-select-option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}
+          </ion-select-option>
+        </ion-select>
+
+        <ion-input type="text" formControlName="description" placeholder="Description"></ion-input>
+
+        <ion-input type="number" formControlName="price" placeholder="Prix"></ion-input>
+
+        <ion-input type="number" formControlName="stock" placeholder="Stock"></ion-input>
+
+        <ion-input type="file" formControlName="imageURL" placeholder="Photo" (change)="loadFile($event)" placeholder="Image"></ion-input>
+
+        <ion-button type="submit">Ajouter le produit</ion-button>
+      </form>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>

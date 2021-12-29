@@ -1,0 +1,12 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  ion-input, ion-select {
+    width: 75%;
+    margin: 10px 0;
+    background-color: #EEE;
+    border-radius: 5px;
+    --padding-start: 10px;
+  }
+}

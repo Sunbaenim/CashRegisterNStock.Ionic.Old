@@ -1,8 +1,7 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
-import { ProductService } from './../../../core/models/services/product.service';
+import { ProductService } from './../../../core/services/product.service';
 import { CategoryIndexModel } from './../../../core/models/category/category-index.model';
 import { environment } from './../../../../environments/environment';
-import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-catalog',
@@ -17,11 +16,8 @@ export class CatalogPage implements OnInit {
   userLevel: string;
   isModalOpen: boolean;
 
-  productFormGroup: FormGroup = this.formBuilder.group({});
-
   constructor(
     private pService: ProductService,
-    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
 import { AdminRoutingModule } from './admin-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AddProductModalComponent } from './add-product-modal/add-product-modal.component';
 
@@ -13,7 +14,8 @@ import { AddProductModalComponent } from './add-product-modal/add-product-modal.
   imports: [
     CommonModule,
     AdminRoutingModule,
-    IonicModule
+    IonicModule,
+    ReactiveFormsModule
   ],
   exports: [
     AddProductModalComponent
