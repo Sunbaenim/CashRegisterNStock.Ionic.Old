@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: 'catalog',
     loadChildren: () => import('./features/pages/catalog/catalog.module').then( m => m.CatalogPageModule)
-  },
+  }
 ];
 
 @NgModule({
