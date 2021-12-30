@@ -8,15 +8,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProductAddModalComponent } from './product-add-modal/product-add-modal.component';
 import { ProductUpdateModalComponent } from './product-update-modal/product-update-modal.component';
 import { ProductFormComponent } from './product-form/product-form.component';
+import { CategoryUpdateModalComponent } from './category-update-modal/category-update-modal.component';
+import { CategoryFormComponent } from './category-form/category-form.component';
 
 @NgModule({
   declarations: [
     ProductAddModalComponent,
     ProductUpdateModalComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    CategoryUpdateModalComponent,
+    CategoryFormComponent
   ],
   imports: [
-  CommonModule,
+CommonModule,
     AdminRoutingModule,
     IonicModule,
     ReactiveFormsModule

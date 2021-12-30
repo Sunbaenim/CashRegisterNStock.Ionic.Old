@@ -11,11 +11,6 @@
 
   <app-product-form *ngIf="choiceSelect.value === 'Produit'"></app-product-form>
 
-  <form *ngIf="choiceSelect.value === 'Catégorie'" [formGroup]="categoryFormGroup" (ngSubmit)="addCategory()">
-
-    <ion-input type="text" formControlName="name" placeholder="Nom de la catégorie"></ion-input>
-
-    <ion-button type="submit">Ajouter la catégorie</ion-button>
-  </form>
+  <app-category-form *ngIf="choiceSelect.value === 'Catégorie'"></app-category-form>
 
 </ion-content>

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CategoryIndexPostProductModel } from 'src/app/core/models/category/category-index-post-product.model';
+import { CategoryIndexWithoutProductModel } from 'src/app/core/models/category/category-index-without-product.model';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { ProductIndexModel } from '../../../../core/models/product/product-index.model';
@@ -15,7 +15,7 @@ export class ProductFormComponent implements OnInit {
   @Input() product: ProductIndexModel;
 
   productFormGroup: FormGroup = this.formBuilder.group({});
-  categories: CategoryIndexPostProductModel[] = [];
+  categories: CategoryIndexWithoutProductModel[] = [];
 
   constructor(
     private formBuilder: FormBuilder,

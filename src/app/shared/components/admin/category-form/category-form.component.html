@@ -1,0 +1,6 @@
+<form [formGroup]="categoryFormGroup" (ngSubmit)="category ? updateCategory() : addCategory()">
+
+  <ion-input type="text" formControlName="name" placeholder="Nom de la catégorie"></ion-input>
+
+  <ion-button type="submit">{{category ? 'Mettre à jour la catégorie' : 'Ajouter la catégorie'}}</ion-button>
+</form>

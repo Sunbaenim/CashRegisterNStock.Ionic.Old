@@ -9,7 +9,7 @@
     <ion-grid>
       <ion-row *ngFor="let category of catalog">
         <ion-row class="category" *ngIf="category.products.length !== 0">
-          <ion-col>
+          <ion-col (click)="userLevel === 'Admin' ? presentUpdateCategoryModal(category) : null">
             <span class="category-name">{{category.name}}</span>
           </ion-col>
         </ion-row>
