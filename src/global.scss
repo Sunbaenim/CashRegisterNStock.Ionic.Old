@@ -26,9 +26,15 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 ion-toolbar {
+  position: relative;
   padding: 0 5%;
   ion-icon {
-    font-size: 6vw;
+    font-size: 7vw;
+  }
+  .trash {
+    position: absolute;
+    right: 5%;
+    color: #AB0000;
   }
 }
 

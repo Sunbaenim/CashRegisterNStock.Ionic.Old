@@ -9,7 +9,7 @@ import { CategoryIndexWithoutProductModel } from '../models/category/category-in
 })
 export class CategoryService {
 
-  categoryUrl: string = environment.apiUrl + 'category';
+  categoryUrl: string = environment.apiUrl + 'category/';
 
   constructor(
     private client: HttpClient
@@ -25,6 +25,10 @@ export class CategoryService {
 
   update(id: number, form: CategoryIndexWithoutProductModel) {
     return this.client.put<CategoryIndexWithoutProductModel>(this.categoryUrl, {id, ...form});
+  };
+
+  delete(id: number) {
+    return this.client.delete(this.categoryUrl + id);
   };
 
 }

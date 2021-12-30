@@ -9,8 +9,8 @@ import { ProductAddModel } from '../models/product/product-add.model';
 })
 export class ProductService {
 
-  categoryUrl: string = environment.apiUrl + 'category';
-  productUrl: string = environment.apiUrl + 'product';
+  categoryUrl: string = environment.apiUrl + 'category/';
+  productUrl: string = environment.apiUrl + 'product/';
 
   constructor(
     private client: HttpClient
@@ -26,6 +26,10 @@ export class ProductService {
 
   update(id: number, form: ProductAddModel) {
     return this.client.put<ProductAddModel>(this.productUrl, {id, ...form});
+  };
+
+  delete(id: number) {
+    return this.client.delete(this.productUrl + id);
   };
 
 }
