@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon (click)="dismiss()" name="arrow-back-sharp"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <ion-select id="choiceSelect" #choiceSelect interface="popover" value="Produit">
+    <ion-select-option *ngFor="let choice of choices" value="{{choice}}">{{choice}}</ion-select-option>
+  </ion-select>
+
+  <app-product-form *ngIf="choiceSelect.value === 'Produit'"></app-product-form>
+
+  <form *ngIf="choiceSelect.value === 'Catégorie'" [formGroup]="categoryFormGroup" (ngSubmit)="addCategory()">
+
+    <ion-input type="text" formControlName="name" placeholder="Nom de la catégorie"></ion-input>
+
+    <ion-button type="submit">Ajouter la catégorie</ion-button>
+  </form>
+
+</ion-content>

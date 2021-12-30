@@ -3,7 +3,9 @@ import { ProductService } from './../../../core/services/product.service';
 import { CategoryIndexModel } from './../../../core/models/category/category-index.model';
 import { environment } from './../../../../environments/environment';
 import { ModalController } from '@ionic/angular';
-import { AddProductModalComponent } from './../../../shared/components/admin/add-product-modal/add-product-modal.component';
+import { ProductAddModalComponent } from './../../../shared/components/admin/product-add-modal/product-add-modal.component';
+import { ProductUpdateModalComponent } from '../../../shared/components/admin/product-update-modal/product-update-modal.component';
+import { ProductIndexModel } from './../../../core/models/product/product-index.model';
 
 @Component({
   selector: 'app-catalog',
@@ -20,7 +22,8 @@ export class CatalogPage implements OnInit {
 
   constructor(
     private pService: ProductService,
-    public addProductModalController: ModalController
+    public addProductModalController: ModalController,
+    public productUpdateModalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -31,9 +34,17 @@ export class CatalogPage implements OnInit {
     this.pService.read().subscribe(data => this.catalog = data);
   };
 
-  async presentModal() {
+  async presentProductAddModal() {
     const modal = await this.addProductModalController.create({
-      component: AddProductModalComponent
+      component: ProductAddModalComponent
+    });
+    return await modal.present();
+  }
+
+  async presentUpdateProductModal(product: ProductIndexModel) {
+    const modal = await this.productUpdateModalController.create({
+      component: ProductUpdateModalComponent,
+      componentProps: {product}
     });
     return await modal.present();
   }

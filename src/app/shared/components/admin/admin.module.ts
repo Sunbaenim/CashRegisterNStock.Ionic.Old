@@ -5,20 +5,21 @@ import { IonicModule } from '@ionic/angular';
 import { AdminRoutingModule } from './admin-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { AddProductModalComponent } from './add-product-modal/add-product-modal.component';
+import { ProductAddModalComponent } from './product-add-modal/product-add-modal.component';
+import { ProductUpdateModalComponent } from './product-update-modal/product-update-modal.component';
+import { ProductFormComponent } from './product-form/product-form.component';
 
 @NgModule({
   declarations: [
-    AddProductModalComponent
+    ProductAddModalComponent,
+    ProductUpdateModalComponent,
+    ProductFormComponent
   ],
   imports: [
-    CommonModule,
+  CommonModule,
     AdminRoutingModule,
     IonicModule,
     ReactiveFormsModule
-  ],
-  exports: [
-    AddProductModalComponent
   ]
 })
 export class AdminModule { }

@@ -18,10 +18,14 @@ export class ProductService {
 
   read() {
     return this.client.get<CategoryIndexModel[]>(this.categoryUrl);
-  }
+  };
 
   create(form: ProductAddModel) {
     return this.client.post<ProductAddModel>(this.productUrl, form);
-  }
+  };
+
+  update(id: number, form: ProductAddModel) {
+    return this.client.put<ProductAddModel>(this.productUrl, {id, ...form});
+  };
 
 }

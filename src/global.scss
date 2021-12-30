@@ -31,3 +31,19 @@ ion-toolbar {
     font-size: 6vw;
   }
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  > ion-button {
+    margin-top: 40px;
+  }
+}
+form ion-input, ion-select {
+  width: 75% !important;
+  margin: 10px 0;
+  background-color: #EEE !important;
+  border-radius: 5px;
+  --padding-start: 10px !important;
+}

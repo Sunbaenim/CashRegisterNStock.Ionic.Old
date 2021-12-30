@@ -1,0 +1,19 @@
+<form [formGroup]="productFormGroup" (ngSubmit)="product ? updateProduct() : addProduct()">
+
+  <ion-input type="text" formControlName="name" placeholder="Nom du produit"></ion-input>
+
+  <ion-select formControlName="categoryId" interface="popover" placeholder="{{product ? null : 'Catégorie'}}">
+    <ion-select-option *ngFor="let category of categories" [value]="category.id">{{category.name}}
+    </ion-select-option>
+  </ion-select>
+
+  <ion-input type="text" formControlName="description" placeholder="Description"></ion-input>
+
+  <ion-input type="number" formControlName="price" placeholder="Prix"></ion-input>
+
+  <ion-input type="number" formControlName="stock" placeholder="Stock"></ion-input>
+
+  <ion-input class="file-input" type="file" formControlName="imageURL" placeholder="Photo" (change)="loadFile($event)" placeholder="Image"><img *ngIf="product" src="{{'https://localhost:44333/' + product.imageURL}}" /></ion-input>
+
+  <ion-button type="submit">{{product ? 'Mettre à jour le produit' : 'Ajouter le produit'}}</ion-button>
+</form>

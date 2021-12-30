@@ -1,0 +1,8 @@
+.file-input {
+  display: flex;
+  flex-direction: column;
+  > img {
+    margin-top: 12px;
+    height: 100px;
+  }
+}
