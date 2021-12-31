@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { CategoryIndexWithoutProductModel } from '../../../../core/models/category/category-index-without-product.model';
+import { ToastService } from './../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-category-form',
@@ -16,7 +17,8 @@ export class CategoryFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private cService: CategoryService
+    private cService: CategoryService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
@@ -31,10 +33,12 @@ export class CategoryFormComponent implements OnInit {
 
   addCategory() {
     this.cService.create(this.categoryFormGroup.value).subscribe();
+    this.toastService.presentToast('La catégorie a bien été ajoutée.');
   };
 
   updateCategory() {
     this.cService.update(this.category.id, this.categoryFormGroup.value).subscribe();
+    this.toastService.presentToast('La catégorie a bien été modifiée.');
   };
 
 }
