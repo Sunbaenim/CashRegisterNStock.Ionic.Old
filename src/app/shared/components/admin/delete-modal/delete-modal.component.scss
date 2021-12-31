@@ -1,0 +1,22 @@
+.warning-delete-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  > p {
+    width: 70%;
+    text-align: center;
+  }
+}
+.options {
+  height: 20%;
+  border-top: 1px solid #BBB;
+  button {
+    width: 50%;
+    height: 100%;
+  }
+  > .delete-product {
+    background-color: #AB0000;
+    color: white;
+  }
+}

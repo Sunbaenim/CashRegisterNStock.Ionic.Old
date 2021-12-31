@@ -52,7 +52,7 @@ export class CatalogPage implements OnInit {
     return await modal.present();
   }
 
-  async presentUpdateCategoryModal(category: CategoryIndexWithoutProductModel) {
+  async presentUpdateCategoryModal(category: CategoryIndexModel) {
     const modal = await this.categoryUpdateModalComponent.create({
       component: CategoryUpdateModalComponent,
       componentProps: {category}

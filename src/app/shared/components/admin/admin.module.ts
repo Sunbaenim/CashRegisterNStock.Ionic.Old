@@ -10,6 +10,7 @@ import { ProductUpdateModalComponent } from './product-update-modal/product-upda
 import { ProductFormComponent } from './product-form/product-form.component';
 import { CategoryUpdateModalComponent } from './category-update-modal/category-update-modal.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
+import { DeleteModalComponent } from './delete-modal/delete-modal.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { CategoryFormComponent } from './category-form/category-form.component';
     ProductUpdateModalComponent,
     ProductFormComponent,
     CategoryUpdateModalComponent,
-    CategoryFormComponent
+    CategoryFormComponent,
+    DeleteModalComponent
   ],
   imports: [
 CommonModule,

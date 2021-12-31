@@ -1,0 +1,8 @@
+<div class="warning-delete-text">
+  <p *ngIf="product">Voulez-vous <strong>supprimer</strong><br>{{product.name}} {{product.description}} ?</p>
+  <p *ngIf="category">Voulez-vous <strong>supprimer</strong> la catégorie "<strong>{{category.name}}</strong>" ?<br>Cela entraînera la perte de <strong>{{category.nbProducts}} produits</strong>.</p>
+</div>
+<div class="options">
+  <button (click)="dismiss()">Annuler</button>
+  <button class="delete-product" (click)="product ? deleteProduct(product.id) : category ? deleteCategory(category.id) : null">Supprimer</button>
+</div>

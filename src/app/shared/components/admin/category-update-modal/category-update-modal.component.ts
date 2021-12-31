@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { CategoryIndexWithoutProductModel } from 'src/app/core/models/category/category-index-without-product.model';
-import { CategoryService } from 'src/app/core/services/category.service';
+import { DeleteModalComponent } from '../delete-modal/delete-modal.component';
+import { CategoryIndexModel } from './../../../../core/models/category/category-index.model';
+import { CategoryDeleteModel } from './../../../../core/models/category/category-delete.model';
 
 @Component({
   selector: 'app-category-update-modal',
@@ -10,11 +11,11 @@ import { CategoryService } from 'src/app/core/services/category.service';
 })
 export class CategoryUpdateModalComponent implements OnInit {
 
-  @Input() category: CategoryIndexWithoutProductModel;
+  @Input() category: CategoryIndexModel;
 
   constructor(
     public categoryUpdateModalController: ModalController,
-    private cService: CategoryService
+    public deleteModalController: ModalController
   ) { }
 
   ngOnInit() {}
@@ -23,8 +24,19 @@ export class CategoryUpdateModalComponent implements OnInit {
     this.categoryUpdateModalController.dismiss();
   };
 
-  deleteCategory(id: number) {
-    this.cService.delete(id).subscribe();
-  };
+  async presentDeleteModal() {
+    const category: CategoryDeleteModel = {
+      id: this.category.id,
+      name: this.category.name,
+      nbProducts: this.category.products.length
+    };
+
+    const modal = await this.deleteModalController.create({
+      component: DeleteModalComponent,
+      componentProps: {category},
+      cssClass: 'delete-modal'
+    });
+    return await modal.present();
+  }
 
 }

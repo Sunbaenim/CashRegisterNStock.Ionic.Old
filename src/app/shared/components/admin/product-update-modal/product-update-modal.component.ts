@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ProductIndexModel } from '../../../../core/models/product/product-index.model';
 import { ProductService } from 'src/app/core/services/product.service';
+import { DeleteModalComponent } from './../delete-modal/delete-modal.component';
 
 @Component({
   selector: 'app-product-update-modal',
@@ -14,7 +15,7 @@ export class ProductUpdateModalComponent implements OnInit {
 
   constructor(
     public updateProductModalController: ModalController,
-    private pService: ProductService
+    public deleteModalController: ModalController
   ) { }
 
   ngOnInit() {}
@@ -23,8 +24,13 @@ export class ProductUpdateModalComponent implements OnInit {
     this.updateProductModalController.dismiss();
   };
 
-  deleteProduct(id: number) {
-    this.pService.delete(id).subscribe();
-  };
+  async presentDeleteModal(product: ProductIndexModel) {
+    const modal = await this.deleteModalController.create({
+      component: DeleteModalComponent,
+      componentProps: {product},
+      cssClass: 'delete-modal'
+    });
+    return await modal.present();
+  }
 
 }
