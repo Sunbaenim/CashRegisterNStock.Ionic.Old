@@ -1,3 +1,26 @@
 #choiceSelect {
-  margin: 60px auto;
+  margin: 40px auto;
+}
+
+#multiple-add {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  > .btn {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #222;
+    border-radius: 3px;
+  }
+
+  .unchecked {
+    background-color: none;
+  }
+
+  .checked {
+    background-color: #3880ff;
+  }
 }

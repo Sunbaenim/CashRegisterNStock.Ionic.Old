@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { CategoryIndexWithoutProductModel } from '../../../../core/models/category/category-index-without-product.model';
 import { ToastService } from './../../../../core/services/toast.service';
@@ -12,13 +13,15 @@ import { ToastService } from './../../../../core/services/toast.service';
 export class CategoryFormComponent implements OnInit {
 
   @Input() category: CategoryIndexWithoutProductModel;
+  @Input() isButtonChecked: boolean;
 
   categoryFormGroup: FormGroup = this.formBuilder.group({});
 
   constructor(
     private formBuilder: FormBuilder,
     private cService: CategoryService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private updateCategoryModalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -33,11 +36,18 @@ export class CategoryFormComponent implements OnInit {
 
   addCategory() {
     this.cService.create(this.categoryFormGroup.value).subscribe();
+    if (this.isButtonChecked) {
+      this.categoryFormGroup.reset();
+    }
+    else {
+      this.updateCategoryModalController.dismiss();
+    }
     this.toastService.presentToast('La catégorie a bien été ajoutée.');
   };
 
   updateCategory() {
     this.cService.update(this.category.id, this.categoryFormGroup.value).subscribe();
+    this.updateCategoryModalController.dismiss();
     this.toastService.presentToast('La catégorie a bien été modifiée.');
   };
 

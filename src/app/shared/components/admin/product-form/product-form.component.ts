@@ -15,6 +15,7 @@ import { ToastService } from './../../../../core/services/toast.service';
 export class ProductFormComponent implements OnInit {
 
   @Input() product: ProductIndexModel;
+  @Input() isButtonChecked: boolean;
 
   productFormGroup: FormGroup = this.formBuilder.group({});
   categories: CategoryIndexWithoutProductModel[] = [];
@@ -55,6 +56,12 @@ export class ProductFormComponent implements OnInit {
 
   addProduct() {
     this.pService.create(this.productFormGroup.value).subscribe();
+    if (this.isButtonChecked) {
+      this.productFormGroup.reset();
+    }
+    else {
+      this.updateProductModalController.dismiss();
+    }
     this.toastService.presentToast('Le produit a bien été ajouté.');
   };
 

@@ -9,8 +9,13 @@
     <ion-select-option *ngFor="let choice of choices" value="{{choice}}">{{choice}}</ion-select-option>
   </ion-select>
 
-  <app-product-form *ngIf="choiceSelect.value === 'Produit'"></app-product-form>
+  <div id="multiple-add">
+    <div class="btn" [ngClass]="[multipleAddStyle]" (click)="changeStyle()"></div>
+    <ion-label>Ajout multiple</ion-label>
+  </div>
 
-  <app-category-form *ngIf="choiceSelect.value === 'Catégorie'"></app-category-form>
+  <app-product-form [isButtonChecked]="multipleAddStyle === 'checked' ? true : false" *ngIf="choiceSelect.value === 'Produit'"></app-product-form>
+
+  <app-category-form [isButtonChecked]="multipleAddStyle === 'checked' ? true : false" *ngIf="choiceSelect.value === 'Catégorie'"></app-category-form>
 
 </ion-content>
