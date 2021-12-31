@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-icon (click)="dismiss()" name="arrow-back-sharp"></ion-icon>
-    <ion-icon (click)="deleteProduct(product.id)" class="trash" name="trash-sharp"></ion-icon>
+    <ion-icon (click)="deleteProduct(product.id); dismiss()" class="trash" name="trash-sharp"></ion-icon>
   </ion-toolbar>
 </ion-header>
 <ion-content>

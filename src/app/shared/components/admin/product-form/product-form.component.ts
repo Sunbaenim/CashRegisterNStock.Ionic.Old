@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 import { CategoryIndexWithoutProductModel } from 'src/app/core/models/category/category-index-without-product.model';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { ProductService } from 'src/app/core/services/product.service';
@@ -20,7 +21,8 @@ export class ProductFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private cService: CategoryService,
-    private pService: ProductService
+    private pService: ProductService,
+    public updateProductModalController: ModalController,
   ) { }
 
   ngOnInit() {
@@ -55,6 +57,7 @@ export class ProductFormComponent implements OnInit {
 
   updateProduct() {
     this.pService.update(this.product.id, this.productFormGroup.value).subscribe();
+    this.updateProductModalController.dismiss();
   };
 
 }
