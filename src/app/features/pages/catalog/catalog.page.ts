@@ -10,6 +10,10 @@ import { CategoryUpdateModalComponent } from './../../../shared/components/admin
 import { CategoryIndexWithoutProductModel } from 'src/app/core/models/category/category-index-without-product.model';
 import { GestureService } from './../../../core/services/gesture.service';
 import { Router } from '@angular/router';
+import { OrderIndexModel } from 'src/app/core/models/order/order-index.model';
+import { OrderLineIndexModel } from 'src/app/core/models/order-line/order-line-index.model';
+import { AddProduct } from 'src/app/shared/store/cart/cart.actions';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'app-catalog',
@@ -32,7 +36,8 @@ export class CatalogPage implements OnInit, AfterViewInit {
     public productUpdateModalController: ModalController,
     public categoryUpdateModalComponent: ModalController,
     private gService: GestureService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) { }
 
   ngOnInit() {
@@ -73,5 +78,19 @@ export class CatalogPage implements OnInit, AfterViewInit {
     });
     return await modal.present();
   }
+
+  addToCart(product: ProductIndexModel) {
+    const order: OrderIndexModel = {
+      id: 1,
+      status: 0
+    };
+    const po: OrderLineIndexModel = {
+      order,
+      product,
+      price: product.price,
+      quantity: 1
+    };
+    this.store.dispatch(new AddProduct(po));
+  };
 
 }

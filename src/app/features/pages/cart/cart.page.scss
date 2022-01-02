@@ -1,0 +1,41 @@
+#cart {
+  padding: 7%;
+  > .product-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10% 0;
+    > img {
+      width: 20%;
+    }
+    > .infos {
+      flex-grow: 2;
+      display: grid;
+      align-items: center;
+      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0px 0px;
+      grid-template-areas:
+        "name quantity"
+        "description options";
+      > .name {
+        font-size: 5vw;
+      }
+      > .description {
+        font-size: 4vw;
+      }
+      > .options {
+        font-size: 5vw;
+        > ion-icon:first-child {
+          color: #AB0000;
+        }
+        > ion-icon:last-child {
+          color: blue;
+        }
+      }
+    }
+    > .price {
+      width: 15%;
+    }
+  }
+}

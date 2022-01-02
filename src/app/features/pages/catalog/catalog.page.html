@@ -14,7 +14,7 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col #product class="product-container" *ngFor="let product of category.products" (click)="userLevel === 'Admin' ? presentUpdateProductModal(product) : null">
+          <ion-col #product class="product-container" *ngFor="let product of category.products" (click)="userLevel === 'Admin' ? presentUpdateProductModal(product) : addToCart(product)">
             <div class="product" [ngStyle]="{'background-image': 'url(' + baseUrl + product.imageURL + ')'}">
               <div class="overlay"></div>
               <div class="product-banner">

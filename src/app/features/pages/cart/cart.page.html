@@ -1,9 +1,26 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>cart</ion-title>
+    <ion-icon name="arrow-back" routerLink=""></ion-icon>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div *ngIf="cart" id="cart">
+    <div class="product-container" *ngFor="let product of cart">
+      <img src="{{baseUrl + product.product.imageURL}}"
+        alt="Image de {{product.product.name}} {{product.product.description}}">
+      <div class="infos">
+        <span class="name">{{product.product.name}}</span>
+        <span class="quantity">x{{product.quantity}}</span>
+        <span class="description">{{product.product.description}}</span>
+        <div class="options">
+          <ion-icon name="trash"></ion-icon>
+          <ion-icon name="create-outline"></ion-icon>
+      </div>
+      </div>
+      <div class="price">
+        <span>{{product.product.price}}€</span>
+      </div>
+    </div>
+  </div>
 </ion-content>
