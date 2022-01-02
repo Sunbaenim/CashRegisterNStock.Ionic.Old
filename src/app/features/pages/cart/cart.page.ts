@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { OrderLineIndexModel } from 'src/app/core/models/order-line/order-line-index.model';
+import { RemoveProduct } from 'src/app/shared/store/cart/cart.actions';
 import { CartState } from 'src/app/shared/store/cart/cart.state';
 import { environment } from 'src/environments/environment';
 
@@ -17,10 +18,17 @@ export class CartPage implements OnInit {
   cart: OrderLineIndexModel[];
   baseUrl: string = environment.baseUrl;
 
-  constructor() { }
+  constructor(
+    private store: Store
+  ) { }
 
   ngOnInit() {
     this.cart$.subscribe(cart => this.cart = cart);
   }
+
+  removeFromCart(orderId: number, productId: number) {
+    console.log(orderId, productId);
+    this.store.dispatch(new RemoveProduct(orderId, productId));
+  };
 
 }

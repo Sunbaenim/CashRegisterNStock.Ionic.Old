@@ -1,7 +1,7 @@
 import { CartStateModel } from './cart.model';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { AddProduct } from './cart.actions';
+import { AddProduct, RemoveProduct } from './cart.actions';
 
 @State<CartStateModel>({
   name: 'OrderLineIndexModel',
@@ -30,6 +30,16 @@ export class CartState {
           ctx.setState({...state});
       }
       else {ctx.setState({cart: [...state.cart, action.product]});};
+  };
+
+  @Action(RemoveProduct)
+  removeProduct(ctx: StateContext<CartStateModel>, action: RemoveProduct) {
+    const state: CartStateModel = ctx.getState();
+    console.log(state);
+    const index = state.cart.findIndex(p => p.order.id === action.orderId && p.product.id === action.productId);
+    console.log(index);
+    state.cart.splice(index, 1);
+    ctx.setState({ cart: [...state.cart] });
   };
 
 }

@@ -14,7 +14,7 @@
         <span class="quantity">x{{product.quantity}}</span>
         <span class="description">{{product.product.description}}</span>
         <div class="options">
-          <ion-icon name="trash"></ion-icon>
+          <ion-icon name="trash" (click)="removeFromCart(product.order.id, product.product.id)"></ion-icon>
           <ion-icon name="create-outline"></ion-icon>
       </div>
       </div>
