@@ -8,4 +8,9 @@ export class AddProduct {
 export class RemoveProduct {
   static readonly type = '[CartState] Remove Product';
   constructor(public orderId: number, public productId: number) {}
-}
+};
+
+export class UpdateQuantity {
+  static readonly type = '[CartState] Update Quantity';
+  constructor(public orderId: number, public productId: number, public quantity: number) {}
+};
