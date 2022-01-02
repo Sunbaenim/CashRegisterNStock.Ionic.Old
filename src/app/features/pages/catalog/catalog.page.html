@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <div id="catalog">
+  <div id="catalog" #catalogPage>
     <ion-grid>
       <ion-row *ngFor="let category of catalog">
         <ion-row class="category" *ngIf="category.products.length !== 0">

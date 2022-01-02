@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from './../../../core/services/product.service';
 import { CategoryIndexModel } from './../../../core/models/category/category-index.model';
 import { environment } from './../../../../environments/environment';
@@ -8,13 +8,17 @@ import { ProductUpdateModalComponent } from '../../../shared/components/admin/pr
 import { ProductIndexModel } from './../../../core/models/product/product-index.model';
 import { CategoryUpdateModalComponent } from './../../../shared/components/admin/category-update-modal/category-update-modal.component';
 import { CategoryIndexWithoutProductModel } from 'src/app/core/models/category/category-index-without-product.model';
+import { GestureService } from './../../../core/services/gesture.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.page.html',
   styleUrls: ['./catalog.page.scss'],
 })
-export class CatalogPage implements OnInit {
+export class CatalogPage implements OnInit, AfterViewInit {
+
+  @ViewChild('catalogPage') page: ElementRef;
 
   catalog: CategoryIndexModel[];
   baseUrl: string = environment.baseUrl;
@@ -26,11 +30,21 @@ export class CatalogPage implements OnInit {
     private pService: ProductService,
     public addProductModalController: ModalController,
     public productUpdateModalController: ModalController,
-    public categoryUpdateModalComponent: ModalController
+    public categoryUpdateModalComponent: ModalController,
+    private gService: GestureService,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.getCatalog();
+  }
+
+  ngAfterViewInit() {
+    this.gService.createGesture(this.page, (detail) => {
+      if (detail.deltaX < -50 && detail.currentX > 200) {
+        this.router.navigate(['/cart']);
+      }
+    });
   }
 
   getCatalog() {
