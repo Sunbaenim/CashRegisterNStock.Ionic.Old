@@ -8,14 +8,16 @@ import { CatalogPageRoutingModule } from './catalog-routing.module';
 
 import { CatalogPage } from './catalog.page';
 import { AdminModule } from './../../../shared/components/admin/admin.module';
+import { SharedModule } from './../../../shared/shared.module';
 
 @NgModule({
   imports: [
-    CommonModule,
+  CommonModule,
     ReactiveFormsModule,
     IonicModule,
     CatalogPageRoutingModule,
-    AdminModule
+    AdminModule,
+    SharedModule
   ],
   declarations: [CatalogPage]
 })
