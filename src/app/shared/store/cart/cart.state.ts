@@ -27,6 +27,7 @@ export class CartState {
 
       if (state.cart[index]) {
           state.cart[index].quantity += action.product.quantity;
+          state.cart[index].price += action.product.product.price;
           ctx.setState({...state});
       }
       else {ctx.setState({cart: [...state.cart, action.product]});};
