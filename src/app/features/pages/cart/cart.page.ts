@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -20,16 +21,27 @@ export class CartPage implements OnInit {
   cart: OrderLineIndexModel[];
   totalPrice: number;
   baseUrl: string = environment.baseUrl;
+  amountPayback: number;
+  amountFormGroup: FormGroup = this.formBuilder.group({});
 
   constructor(
     private store: Store,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
     this.cart$.subscribe(cart => this.cart = cart);
     this.totalPrice = 0;
     this.cart.forEach((p) => this.totalPrice += p.price);
+    this.amountPayback = 0;
+    this.amountFormGroup = this.formBuilder.group({
+      amount: 0
+    });
+    this.amountFormGroup.get('amount').valueChanges.subscribe((x) => {
+      this.amountPayback = x - this.totalPrice;
+      console.log(this.amountPayback);
+    });
   }
 
   removeFromCart(orderId: number, productId: number) {

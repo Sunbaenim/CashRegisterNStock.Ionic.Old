@@ -28,4 +28,29 @@
     <p>Total : {{totalPrice}}€</p>
   </div>
   <div class="bar-shadow"></div>
+  <div id="tools">
+    <div id="cash-group">
+      <div class="cash-pill" (click)="amount.value = 5">
+        <p>€ 5</p>
+      </div>
+      <div class="cash-pill" (click)="amount.value = 10">
+        <p>€ 10</p>
+      </div>
+      <div class="cash-pill" (click)="amount.value = 20">
+        <p>€ 20</p>
+      </div>
+      <div class="cash-pill" (click)="amount.value = 50">
+        <p>€ 50</p>
+      </div>
+      <div class="cash-pill" (click)="amount.value = 100">
+        <p>€ 100</p>
+      </div>
+    </div>
+    <div id="amount-group">
+      <form [formGroup]="amountFormGroup">
+        <ion-input formControlName="amount" #amount type="number" placeholder="Montant"></ion-input>
+      </form>
+      <p>A rendre : {{amountPayback}}€</p>
+    </div>
+  </div>
 </ion-content>

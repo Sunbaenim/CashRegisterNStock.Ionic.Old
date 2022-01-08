@@ -49,6 +49,40 @@
 }
 
 #tools {
+  #cash-group {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 10%;
+    > .cash-pill {
+      width: 45px;
+      height: 22px;
+      border-radius: 11px;
+      background-color: #1e1e1e;
+      > p {
+        margin: 0.6vw 0 0 0;
+        text-align: center;
+        color: white;
+        font-size: 4vw;
+      }
+    }
+  }
+  #amount-group {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    > form {
+      width: 30% !important;
+      > ion-input {
+        width: 100% !important;
+      }
+    }
+    > p {
+      width: 70%;
+      text-align: end;
+    }
+  }
   > #options {
     padding: 5% 10%;
   }
