@@ -18,6 +18,7 @@ export class CartPage implements OnInit {
   @Select(CartState.cart) cart$!: Observable<OrderLineIndexModel[]>;
 
   cart: OrderLineIndexModel[];
+  totalPrice: number;
   baseUrl: string = environment.baseUrl;
 
   constructor(
@@ -27,6 +28,8 @@ export class CartPage implements OnInit {
 
   ngOnInit() {
     this.cart$.subscribe(cart => this.cart = cart);
+    this.totalPrice = 0;
+    this.cart.forEach((p) => this.totalPrice += p.price);
   }
 
   removeFromCart(orderId: number, productId: number) {

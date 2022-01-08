@@ -39,3 +39,16 @@
     }
   }
 }
+
+#total {
+  padding: 1% 10%;
+  > p {
+    text-align: end;
+  }
+}
+
+#tools {
+  > #options {
+    padding: 5% 10%;
+  }
+}
