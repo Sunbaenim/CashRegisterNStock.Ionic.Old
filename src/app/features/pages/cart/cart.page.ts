@@ -70,7 +70,7 @@ export class CartPage implements OnInit {
         {
           text: 'Valider',
           handler: (quantity) => {
-            this.store.dispatch(new UpdateQuantity(product.order.id, product.product.id, quantity.quantity));
+            this.store.dispatch(new UpdateQuantity(product, quantity.quantity));
             this.alertController.dismiss();
           }
         }
@@ -79,11 +79,6 @@ export class CartPage implements OnInit {
 
     await alert.present();
   }
-
-  updateQuantity(orderId: number, productId: number) {
-    const quantity = 1;
-    this.store.dispatch(new UpdateQuantity(orderId, productId, quantity));
-  };
 
   confirmPayment() {
     console.log('Paiement confirmé');

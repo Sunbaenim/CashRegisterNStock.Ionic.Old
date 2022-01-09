@@ -46,10 +46,10 @@ export class CartState {
   @Action(UpdateQuantity)
   updateQuantity(ctx: StateContext<CartStateModel>, action: UpdateQuantity) {
     const state: CartStateModel = ctx.getState();
-    const index = state.cart.findIndex(p => p.order.id === action.orderId && p.product.id === action.productId);
+    const index = state.cart.findIndex(p => p.order.id === action.product.order.id && p.product.id === action.product.product.id);
     state.cart[index].quantity = action.quantity;
+    state.cart[index].price = action.product.product.price * action.quantity;
     ctx.setState({ cart: [...state.cart] });
-    console.log(state.cart);
   };
 
 }

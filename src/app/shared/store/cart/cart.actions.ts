@@ -12,5 +12,5 @@ export class RemoveProduct {
 
 export class UpdateQuantity {
   static readonly type = '[CartState] Update Quantity';
-  constructor(public orderId: number, public productId: number, public quantity: number) {}
+  constructor(public product: OrderLineIndexModel, public quantity: number) {}
 };
