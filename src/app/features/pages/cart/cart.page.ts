@@ -4,10 +4,10 @@ import { AlertController } from '@ionic/angular';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { OrderLineIndexModel } from 'src/app/core/models/order-line/order-line-index.model';
-import { RemoveProduct } from 'src/app/shared/store/cart/cart.actions';
+import { RemoveProduct, UpdateQuantity } from 'src/app/shared/store/cart/cart.actions';
 import { CartState } from 'src/app/shared/store/cart/cart.state';
 import { environment } from 'src/environments/environment';
-import { UpdateQuantity } from './../../../shared/store/cart/cart.actions';
+import { OrderLineService } from './../../../core/services/order-line.service';
 
 @Component({
   selector: 'app-cart',
@@ -28,6 +28,7 @@ export class CartPage implements OnInit {
     private store: Store,
     private alertController: AlertController,
     private formBuilder: FormBuilder,
+    private olService: OrderLineService
   ) { }
 
   ngOnInit() {
@@ -82,6 +83,10 @@ export class CartPage implements OnInit {
   updateQuantity(orderId: number, productId: number) {
     const quantity = 1;
     this.store.dispatch(new UpdateQuantity(orderId, productId, quantity));
+  };
+
+  confirmPayment() {
+    console.log('Paiement confirmé');
   };
 
 }
