@@ -3,10 +3,13 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
+import { Status } from 'src/app/core/models/enums/status.enum';
 import { OrderLineIndexModel } from 'src/app/core/models/order-line/order-line-index.model';
+import { OrderService } from 'src/app/core/services/order.service';
 import { RemoveProduct, UpdateQuantity } from 'src/app/shared/store/cart/cart.actions';
 import { CartState } from 'src/app/shared/store/cart/cart.state';
 import { environment } from 'src/environments/environment';
+import { OrderUpdateModel } from './../../../core/models/order/order-update.model';
 
 @Component({
   selector: 'app-cart',
@@ -27,7 +30,8 @@ export class CartPage implements OnInit {
     private store: Store,
     private alertController: AlertController,
     private formBuilder: FormBuilder,
-  ) { }
+    private oService: OrderService
+    ) { }
 
   ngOnInit() {
     this.cart$.subscribe(cart => this.cart = cart);
@@ -79,7 +83,11 @@ export class CartPage implements OnInit {
   }
 
   confirmPayment() {
-    console.log('Paiement confirmé');
+    const order: OrderUpdateModel = {
+      id: 1,
+      status: Status.finished
+    };
+    this.oService.update(order).subscribe();
   };
 
 }

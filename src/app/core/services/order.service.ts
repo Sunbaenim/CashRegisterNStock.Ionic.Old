@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { OrderAddModel } from '../models/order/order-add.model';
 import { OrderIndexModel } from '../models/order/order-index.model';
+import { OrderUpdateModel } from '../models/order/order-update.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class OrderService {
     return this.client.get<[OrderIndexModel]>(this.orderUrl);
   };
 
-  update(form: OrderAddModel) {
-    return this.client.post<OrderAddModel>(this.orderUrl, form);
+  update(form: OrderUpdateModel) {
+    return this.client.put<OrderUpdateModel>(this.orderUrl + form.id, form);
   };
 
 }
