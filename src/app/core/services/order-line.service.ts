@@ -16,7 +16,7 @@ export class OrderLineService {
   ) { }
 
   create(form: OrderLineAddModel) {
-    return this.client.post(this.orderLineUrl, form);
+    return this.client.post<OrderLineAddModel>(this.orderLineUrl, form);
   };
 
   read() {
@@ -24,7 +24,7 @@ export class OrderLineService {
   };
 
   update(form: OrderLineAddModel) {
-    return this.client.post<OrderLineAddModel>(this.orderLineUrl, form);
+    return this.client.put<OrderLineAddModel>(this.orderLineUrl, form);
   };
 
   delete(orderId: number, productId: number) {

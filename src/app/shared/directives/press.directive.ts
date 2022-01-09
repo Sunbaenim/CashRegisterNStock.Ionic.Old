@@ -75,8 +75,8 @@ export class PressDirective {
             const ol: OrderLineIndexModel = {
               order: {id: 1, status: Status.inProgress},
               product: this.product,
-              quantity: quantity.quantity,
-              price: this.product.price
+              quantity: parseInt(quantity.quantity, 10),
+              price: this.product.price * parseInt(quantity.quantity, 10)
             };
             this.store.dispatch(new AddProduct(ol));
             this.alertController.dismiss();

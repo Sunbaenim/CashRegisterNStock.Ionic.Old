@@ -7,7 +7,6 @@ import { OrderLineIndexModel } from 'src/app/core/models/order-line/order-line-i
 import { RemoveProduct, UpdateQuantity } from 'src/app/shared/store/cart/cart.actions';
 import { CartState } from 'src/app/shared/store/cart/cart.state';
 import { environment } from 'src/environments/environment';
-import { OrderLineService } from './../../../core/services/order-line.service';
 
 @Component({
   selector: 'app-cart',
@@ -28,7 +27,6 @@ export class CartPage implements OnInit {
     private store: Store,
     private alertController: AlertController,
     private formBuilder: FormBuilder,
-    private olService: OrderLineService
   ) { }
 
   ngOnInit() {
@@ -70,7 +68,7 @@ export class CartPage implements OnInit {
         {
           text: 'Valider',
           handler: (quantity) => {
-            this.store.dispatch(new UpdateQuantity(product, quantity.quantity));
+            this.store.dispatch(new UpdateQuantity(product, parseInt(quantity.quantity, 10)));
             this.alertController.dismiss();
           }
         }
