@@ -10,6 +10,7 @@ import { RemoveProduct, UpdateQuantity } from 'src/app/shared/store/cart/cart.ac
 import { CartState } from 'src/app/shared/store/cart/cart.state';
 import { environment } from 'src/environments/environment';
 import { OrderUpdateModel } from './../../../core/models/order/order-update.model';
+import { OrderIndexModel } from './../../../core/models/order/order-index.model';
 
 @Component({
   selector: 'app-cart',
@@ -25,6 +26,7 @@ export class CartPage implements OnInit {
   baseUrl: string = environment.baseUrl;
   amountPayback: number;
   amountFormGroup: FormGroup = this.formBuilder.group({});
+  orders: OrderIndexModel[] = [];
 
   constructor(
     private store: Store,
@@ -34,6 +36,7 @@ export class CartPage implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.getOrders();
     this.cart$.subscribe(cart => this.cart = cart);
     this.totalPrice = 0;
     this.cart.forEach((p) => this.totalPrice += p.price);
@@ -80,6 +83,10 @@ export class CartPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  getOrders() {
+    this.oService.read().subscribe((data) => this.orders = data);
   }
 
   confirmPayment() {
