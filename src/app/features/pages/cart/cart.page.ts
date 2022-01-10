@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Select, Store } from '@ngxs/store';
@@ -28,6 +28,7 @@ export class CartPage implements OnInit {
   baseUrl: string = environment.baseUrl;
   amountPayback: number;
   amountFormGroup: FormGroup = this.formBuilder.group({});
+  selectedCash: number;
   orders: OrderIndexModel[] = [];
   selectedOrder: number;
 
@@ -36,7 +37,8 @@ export class CartPage implements OnInit {
     private alertController: AlertController,
     private formBuilder: FormBuilder,
     private oService: OrderService,
-    private pService: ProductService
+    private pService: ProductService,
+    private ngZone: NgZone
     ) { }
 
   ngOnInit() {
@@ -49,8 +51,7 @@ export class CartPage implements OnInit {
       amount: 0
     });
     this.amountFormGroup.get('amount').valueChanges.subscribe((x) => {
-      this.amountPayback = x - this.totalPrice;
-      console.log(this.amountPayback);
+      this.ngZone.run(() => this.amountPayback = x - this.totalPrice);
     });
     this.selectedOrder = 1;
   }
