@@ -43,7 +43,7 @@ export class CartPage implements OnInit {
     this.getOrders();
     this.cart$.subscribe(cart => this.cart = cart);
     this.totalPrice = 0;
-    this.cart.forEach((p) => this.totalPrice += p.price);
+    this.getTotalPrice();
     this.amountPayback = 0;
     this.amountFormGroup = this.formBuilder.group({
       amount: 0
@@ -55,9 +55,17 @@ export class CartPage implements OnInit {
     this.selectedOrder = 1;
   }
 
+  getTotalPrice() {
+    this.cart.forEach((p) => this.totalPrice += p.price);
+  };
+
   removeFromCart(orderId: number, productId: number) {
     new Promise((resolve) => resolve(this.store.dispatch(new RemoveProduct(orderId, productId))))
-    .then(() => this.cart$.subscribe(cart => this.cart = cart));
+    .then(() => {
+      this.cart$.subscribe(cart => this.cart = cart);
+      this.totalPrice = 0;
+      this.getTotalPrice();
+    });
   };
 
   async presentAlert(product: OrderLineIndexModel) {
