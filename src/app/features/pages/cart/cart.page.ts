@@ -11,6 +11,7 @@ import { CartState } from 'src/app/shared/store/cart/cart.state';
 import { environment } from 'src/environments/environment';
 import { OrderUpdateModel } from './../../../core/models/order/order-update.model';
 import { OrderIndexModel } from './../../../core/models/order/order-index.model';
+import { OrderAddModel } from './../../../core/models/order/order-add.model';
 
 @Component({
   selector: 'app-cart',
@@ -27,6 +28,7 @@ export class CartPage implements OnInit {
   amountPayback: number;
   amountFormGroup: FormGroup = this.formBuilder.group({});
   orders: OrderIndexModel[] = [];
+  selectedOrder: number;
 
   constructor(
     private store: Store,
@@ -48,6 +50,7 @@ export class CartPage implements OnInit {
       this.amountPayback = x - this.totalPrice;
       console.log(this.amountPayback);
     });
+    this.selectedOrder = 1;
   }
 
   removeFromCart(orderId: number, productId: number) {
@@ -86,8 +89,21 @@ export class CartPage implements OnInit {
   }
 
   getOrders() {
-    this.oService.read().subscribe((data) => this.orders = data);
-  }
+    this.oService.read().subscribe((data) => {
+      data.map((o) => {
+        if (o.status.toString() === 'InProgress') {
+          this.orders.push(o);
+        }
+      });
+    });
+  };
+
+  addOrder() {
+    const order: OrderAddModel = {
+      status: Status.inProgress
+    };
+    this.oService.create(order).subscribe();
+  };
 
   confirmPayment() {
     const order: OrderUpdateModel = {
