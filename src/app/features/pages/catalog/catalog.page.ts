@@ -13,7 +13,9 @@ import { Router } from '@angular/router';
 import { OrderIndexModel } from 'src/app/core/models/order/order-index.model';
 import { OrderLineIndexModel } from 'src/app/core/models/order-line/order-line-index.model';
 import { AddProduct } from 'src/app/shared/store/cart/cart.actions';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
+import { CartState } from 'src/app/shared/store/cart/cart.state';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-catalog',
@@ -23,12 +25,16 @@ import { Store } from '@ngxs/store';
 export class CatalogPage implements OnInit, AfterViewInit {
 
   @ViewChild('catalogPage') page: ElementRef;
+  @Select(CartState.cart) cart$!: Observable<OrderLineIndexModel[]>;
 
   catalog: CategoryIndexModel[];
   baseUrl: string = environment.baseUrl;
 
   userLevel: string;
   isModalOpen: boolean;
+
+  cart: OrderLineIndexModel[];
+  index: number;
 
   constructor(
     private pService: ProductService,
@@ -42,6 +48,7 @@ export class CatalogPage implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getCatalog();
+    this.cart$.subscribe(cart => this.cart = cart);
   }
 
   ngAfterViewInit() {
@@ -91,6 +98,16 @@ export class CatalogPage implements OnInit, AfterViewInit {
       quantity: 1
     };
     this.store.dispatch(new AddProduct(po));
+  };
+
+  existInCart(product: ProductIndexModel): boolean {
+    this.index = this.cart.findIndex(p => p.product.id === product.id);
+    if (this.index >= 0) {return true;}
+    else {return false;}
+  };
+
+  getQuantity(): number {
+    return this.index >= 0 ? this.cart[this.index].quantity : null;
   };
 
 }

@@ -24,6 +24,9 @@
                   <span class="product-price">{{product.price}}€</span>
               </div>
             </div>
+            <div class="circle" *ngIf="existInCart(product)">
+              <p>{{getQuantity()}}</p>
+            </div>
           </ion-col>
         </ion-row>
       </ion-row>
