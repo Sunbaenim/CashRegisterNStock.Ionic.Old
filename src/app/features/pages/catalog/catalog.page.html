@@ -25,7 +25,7 @@
               </div>
             </div>
             <div class="circle" *ngIf="userLevel === 'Admin' ? true : existInCart(product)"
-              [ngStyle]="{'background-color': product.stock < 30 && product.stock > 15 ? 'orange' : product.stock <= 15 ? 'red' : '#green' }">
+              [ngStyle]="{'background-color': userLevel === 'Admin' ? product.stock < 30 && product.stock > 15 ? 'orange' : product.stock <= 15 ? 'red' : 'green' : '#3880ff'}">
               <p>{{userLevel === 'Admin' ? product.stock : getQuantity()}}</p>
             </div>
           </ion-col>
