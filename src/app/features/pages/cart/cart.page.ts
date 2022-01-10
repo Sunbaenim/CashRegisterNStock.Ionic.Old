@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { OrderUpdateModel } from './../../../core/models/order/order-update.model';
 import { OrderIndexModel } from './../../../core/models/order/order-index.model';
 import { OrderAddModel } from './../../../core/models/order/order-add.model';
+import { ProductService } from 'src/app/core/services/product.service';
 
 @Component({
   selector: 'app-cart',
@@ -34,7 +35,8 @@ export class CartPage implements OnInit {
     private store: Store,
     private alertController: AlertController,
     private formBuilder: FormBuilder,
-    private oService: OrderService
+    private oService: OrderService,
+    private pService: ProductService
     ) { }
 
   ngOnInit() {
@@ -111,6 +113,10 @@ export class CartPage implements OnInit {
       status: Status.finished
     };
     this.oService.update(order).subscribe();
+
+    this.cart.forEach(orderLine => {
+      this.pService.decrementStock({id: orderLine.product.id, quantity: orderLine.quantity}).subscribe();
+    });
   };
 
 }
