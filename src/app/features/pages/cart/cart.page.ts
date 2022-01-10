@@ -56,8 +56,8 @@ export class CartPage implements OnInit {
   }
 
   removeFromCart(orderId: number, productId: number) {
-    console.log(orderId, productId);
-    this.store.dispatch(new RemoveProduct(orderId, productId));
+    new Promise((resolve) => resolve(this.store.dispatch(new RemoveProduct(orderId, productId))))
+    .then(() => this.cart$.subscribe(cart => this.cart = cart));
   };
 
   async presentAlert(product: OrderLineIndexModel) {
