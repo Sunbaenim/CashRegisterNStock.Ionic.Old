@@ -20,4 +20,15 @@ export class ToastService {
     });
     toast.present();
   }
+
+  async presentToastError(messageDisplay: string) {
+    const toast = await this.toastController.create({
+      message: messageDisplay,
+      duration: 2000,
+      cssClass: 'toast',
+      icon: 'checkmark-sharp',
+      color: 'danger'
+    });
+    toast.present();
+  }
 }
