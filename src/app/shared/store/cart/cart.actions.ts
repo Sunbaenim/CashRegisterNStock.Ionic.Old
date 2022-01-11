@@ -14,3 +14,8 @@ export class UpdateQuantity {
   static readonly type = '[CartState] Update Quantity';
   constructor(public product: OrderLineIndexModel, public quantity: number) {}
 };
+
+export class LoadCart {
+  static readonly type = '[CartState] Load Cart';
+  constructor(public orderId: number) {}
+};

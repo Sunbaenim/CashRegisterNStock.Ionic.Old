@@ -23,6 +23,10 @@ export class OrderLineService {
     return this.client.get<[OrderLineIndexModel]>(this.orderLineUrl);
   };
 
+  getByOrderId(orderId: number) {
+    return this.client.get<[OrderLineIndexModel]>(this.orderLineUrl + orderId);
+  }
+
   update(form: OrderLineAddModel) {
     return this.client.put<OrderLineAddModel>(this.orderLineUrl, form);
   };

@@ -18,10 +18,13 @@
             <div class="product" [ngStyle]="{'background-image': 'url(' + baseUrl + product.imageURL + ')'}">
               <div class="overlay"></div>
               <div class="product-banner">
-                  <span div class="product-name">{{product.name}}</span>
-                  <br>
-                  <span class="product-desc">{{product.description}}</span>
-                  <span class="product-price">{{product.price}}€</span>
+                <div class="topBanner">
+                  <span div class="product-name" appAutoresize>{{product.name}}</span>
+                </div>
+                    <div class="subBanner">
+                      <span class="product-desc">{{product.description}}</span>
+                      <span class="product-price">{{product.price}}€</span>
+                    </div>
               </div>
             </div>
             <div class="circle" *ngIf="userLevel === 'Admin' ? true : existInCart(product)"

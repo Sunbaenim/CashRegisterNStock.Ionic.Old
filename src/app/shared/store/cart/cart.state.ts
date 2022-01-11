@@ -1,8 +1,10 @@
 import { CartStateModel } from './cart.model';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { AddProduct, RemoveProduct, UpdateQuantity } from './cart.actions';
+import { AddProduct, LoadCart, RemoveProduct, UpdateQuantity } from './cart.actions';
 import { OrderLineService } from './../../../core/services/order-line.service';
+import { OrderService } from 'src/app/core/services/order.service';
+import { OrderLineIndexModel } from './../../../core/models/order-line/order-line-index.model';
 
 @State<CartStateModel>({
   name: 'OrderLineIndexModel',
@@ -72,6 +74,14 @@ export class CartState {
       quantity: action.quantity,
       price: state.cart[index].price
     }).subscribe();
+  };
+
+  @Action(LoadCart)
+  loadCart(ctx: StateContext<CartStateModel>, action: LoadCart) {
+    this.olService.getByOrderId(action.orderId).subscribe(data => {
+      ctx.getState();
+      ctx.setState({ cart: data});
+    });
   };
 
 }

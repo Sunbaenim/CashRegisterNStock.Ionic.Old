@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges, NgZone } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, NgZone, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Select, Store } from '@ngxs/store';
@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { Status } from 'src/app/core/models/enums/status.enum';
 import { OrderLineIndexModel } from 'src/app/core/models/order-line/order-line-index.model';
 import { OrderService } from 'src/app/core/services/order.service';
-import { RemoveProduct, UpdateQuantity } from 'src/app/shared/store/cart/cart.actions';
+import { LoadCart, RemoveProduct, UpdateQuantity } from 'src/app/shared/store/cart/cart.actions';
 import { CartState } from 'src/app/shared/store/cart/cart.state';
 import { environment } from 'src/environments/environment';
 import { OrderUpdateModel } from './../../../core/models/order/order-update.model';
@@ -31,6 +31,7 @@ export class CartPage implements OnInit {
   selectedCash: number;
   orders: OrderIndexModel[] = [];
   selectedOrder: number;
+  firstOrderId: number;
 
   constructor(
     private store: Store,
@@ -43,7 +44,9 @@ export class CartPage implements OnInit {
 
   ngOnInit() {
     this.getOrders();
-    this.cart$.subscribe(cart => this.cart = cart);
+    this.cart$.subscribe(cart => {
+      this.cart = cart;
+    });
     this.totalPrice = 0;
     this.getTotalPrice();
     this.amountPayback = 0;
@@ -106,6 +109,9 @@ export class CartPage implements OnInit {
           this.orders.push(o);
         }
       });
+      if(this.orders.length) {
+        this.loadCartFromOrder(this.orders[0].id);
+      }
     });
   };
 
@@ -126,6 +132,10 @@ export class CartPage implements OnInit {
     this.cart.forEach(orderLine => {
       this.pService.decrementStock({id: orderLine.product.id, quantity: orderLine.quantity}).subscribe();
     });
+  };
+
+  loadCartFromOrder(id: number) {
+    this.store.dispatch(new LoadCart(id));
   };
 
 }
