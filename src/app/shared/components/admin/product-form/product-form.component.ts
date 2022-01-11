@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController, ToastController } from '@ionic/angular';
 import { CategoryIndexWithoutProductModel } from 'src/app/core/models/category/category-index-without-product.model';
@@ -25,7 +25,7 @@ export class ProductFormComponent implements OnInit {
     private cService: CategoryService,
     private pService: ProductService,
     public updateProductModalController: ModalController,
-    private toastService: ToastService
+    private toastService: ToastService,
   ) { }
 
   ngOnInit() {
@@ -35,17 +35,20 @@ export class ProductFormComponent implements OnInit {
 
   loadproductFormGroup() {
     this.productFormGroup = this.formBuilder.group({
-      name: [this.product ? this.product.name : null, [Validators.required, Validators.maxLength(50)]],
-      imageURL: [this.product ? this.product.imageURL : null],
-      description: [ this.product ? this.product.description : null, [Validators.required, Validators.maxLength(255)]],
-      price: [this.product ? this.product.price : null, [Validators.required, Validators.min(0)]],
-      stock: [this.product ? this.product.stock : null, [Validators.min(0)]],
-      categoryId: new FormControl(this.product ? this.product.categoryId : null, [Validators.required, Validators.min(0)])
+      name: [null, [Validators.required, Validators.maxLength(50)]],
+      imageURL: [null],
+      description: [ null, [Validators.required, Validators.maxLength(255)]],
+      price: [null, [Validators.required, Validators.min(0)]],
+      stock: [null, [Validators.min(0)]],
+      categoryId: [null, [Validators.required, Validators.min(0)]]
     });
+    this.productFormGroup.patchValue(this.product);
   };
 
   getCategories() {
-    this.cService.read().subscribe(data => this.categories = data);
+    this.cService.read().subscribe(data => {
+      this.categories = data;
+    });
   };
 
   loadFile(ev) {
