@@ -16,8 +16,6 @@ import { OrderLineIndexModel } from './../../../core/models/order-line/order-lin
 @Injectable()
 export class CartState {
 
-  newCart: OrderLineIndexModel[];
-
   constructor(
     private olService: OrderLineService
   ) {}
@@ -80,9 +78,10 @@ export class CartState {
 
   @Action(LoadCart)
   loadCart(ctx: StateContext<CartStateModel>, action: LoadCart) {
-    this.olService.getByOrderId(action.orderId).subscribe(data => this.newCart = data);
-    ctx.getState();
-    ctx.setState({ cart: this.newCart});
+    this.olService.getByOrderId(action.orderId).subscribe(data => {
+      ctx.getState();
+      ctx.setState({ cart: data});
+    });
   };
 
 }

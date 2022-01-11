@@ -44,7 +44,9 @@ export class CartPage implements OnInit {
 
   ngOnInit() {
     this.getOrders();
-    this.cart$.subscribe(cart => this.cart = cart);
+    this.cart$.subscribe(cart => {
+      this.cart = cart;
+    });
     this.totalPrice = 0;
     this.getTotalPrice();
     this.amountPayback = 0;
@@ -107,6 +109,9 @@ export class CartPage implements OnInit {
           this.orders.push(o);
         }
       });
+      if(this.orders.length) {
+        this.loadCartFromOrder(this.orders[0].id);
+      }
     });
   };
 
