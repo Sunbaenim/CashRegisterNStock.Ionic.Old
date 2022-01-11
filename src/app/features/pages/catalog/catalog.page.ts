@@ -77,6 +77,8 @@ export class CatalogPage implements OnInit, AfterViewInit {
       component: ProductUpdateModalComponent,
       componentProps: {product}
     });
+    modal.onDidDismiss().then(() => this.getCatalog());
+
     return await modal.present();
   }
 

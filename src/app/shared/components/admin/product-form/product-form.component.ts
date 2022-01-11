@@ -67,9 +67,10 @@ export class ProductFormComponent implements OnInit {
   };
 
   updateProduct() {
-    this.pService.update(this.product.id, this.productFormGroup.value).subscribe();
-    this.updateProductModalController.dismiss();
-    this.toastService.presentToast('Le produit a bien été modifié.');
+    this.pService.update(this.product.id, this.productFormGroup.value).subscribe(() => {
+      this.updateProductModalController.dismiss();
+      this.toastService.presentToast('Le produit a bien été modifié.');
+    });
   };
 
 }
