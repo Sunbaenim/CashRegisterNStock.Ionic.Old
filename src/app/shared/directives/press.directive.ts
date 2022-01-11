@@ -15,6 +15,8 @@ export class PressDirective {
 
   longPressActive: boolean;
 
+  start: number;
+
   constructor(
     private gestureCtrl: GestureController,
     private alertController: AlertController,
@@ -25,12 +27,13 @@ export class PressDirective {
       this.createPressGesture();
     }
 
-    createPressGesture() {
+  createPressGesture() {
     const gesture = this.gestureCtrl.create({
       el: this.el.nativeElement,
       gestureName: 'press',
       threshold: 0,
       onStart: (ev) => {
+        this.start = Date.now();
         this.longPressActive = true;
         this.onStart(ev);
       },
@@ -44,7 +47,7 @@ export class PressDirective {
 
   onStart(ev: GestureDetail) {
     const interval = setTimeout(() => {
-      if (this.longPressActive) {
+      if (this.longPressActive && Date.now() - this.start > 500) {
         this.longPressActive = false;
         this.presentAlertQuantity();
         clearInterval(interval);
