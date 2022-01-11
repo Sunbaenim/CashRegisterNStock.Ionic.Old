@@ -55,14 +55,15 @@ export class ProductFormComponent implements OnInit {
   };
 
   addProduct() {
-    this.pService.create(this.productFormGroup.value).subscribe();
-    if (this.isButtonChecked) {
-      this.productFormGroup.reset();
-    }
-    else {
-      this.updateProductModalController.dismiss();
-    }
-    this.toastService.presentToast('Le produit a bien été ajouté.');
+    this.pService.create(this.productFormGroup.value).subscribe(() => {
+      if (this.isButtonChecked) {
+        this.productFormGroup.reset();
+      }
+      else {
+        this.updateProductModalController.dismiss();
+      }
+      this.toastService.presentToast('Le produit a bien été ajouté.');
+    });
   };
 
   updateProduct() {
