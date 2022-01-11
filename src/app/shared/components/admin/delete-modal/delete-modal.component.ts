@@ -32,15 +32,27 @@ export class DeleteModalComponent implements OnInit {
   };
 
   deleteProduct(id: number) {
-    this.pService.delete(id).subscribe();
-    this.deleteModalController.dismiss().then(() => this.productUpdateModalController.dismiss());
-    this.toastService.presentToast('Le produit a bien été supprimé.');
+    this.pService.delete(id).subscribe({
+      next: () => {
+        this.deleteModalController.dismiss().then(() => this.productUpdateModalController.dismiss());
+        this.toastService.presentToast('Le produit a bien été supprimé.');
+      }, error: () => {
+        this.deleteModalController.dismiss();
+        this.toastService.presentToastError('Une erreur est survenue.');
+      }
+    });
   };
 
   deleteCategory(id: number) {
-    this.cService.delete(id).subscribe();
-    this.deleteModalController.dismiss().then(() => this.categoryUpdateModalController.dismiss());
-    this.toastService.presentToast('La catégorie a bien été supprimée.');
+    this.cService.delete(id).subscribe({
+      next: () => {
+        this.deleteModalController.dismiss().then(() => this.categoryUpdateModalController.dismiss());
+        this.toastService.presentToast('La catégorie a bien été supprimée.');
+      }, error: () => {
+        this.deleteModalController.dismiss();
+        this.toastService.presentToastError('Une erreur est survenue.');
+      }
+    });
   };
 
 }
