@@ -92,7 +92,7 @@ export class CatalogPage implements OnInit, AfterViewInit {
 
   addToCart(product: ProductIndexModel) {
     const order: OrderIndexModel = {
-      id: 1,
+      id: 3,
       status: 0
     };
     const po: OrderLineIndexModel = {
