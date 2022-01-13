@@ -80,14 +80,20 @@
               > .product-name {
                 position: absolute;
                 font-weight: bold;
+                white-space: nowrap;
               }
             }
             > .subBanner {
               display: flex;
               justify-content: space-between;
+              > .product-desc {
+                width: 70%;
+                overflow: hidden;
+              }
               > .product-desc,
               > .product-price {
                 font-size: 0.7em;
+                white-space: nowrap;
               }
             }
           }
