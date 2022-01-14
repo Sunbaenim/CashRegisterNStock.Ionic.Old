@@ -12,10 +12,11 @@ import { GestureService } from './../../../core/services/gesture.service';
 import { Router } from '@angular/router';
 import { OrderIndexModel } from 'src/app/core/models/order/order-index.model';
 import { OrderLineIndexModel } from 'src/app/core/models/order-line/order-line-index.model';
-import { AddProduct } from 'src/app/shared/store/cart/cart.actions';
+import { AddProduct, LoadCart } from 'src/app/shared/store/cart/cart.actions';
 import { Select, Store } from '@ngxs/store';
 import { CartState } from 'src/app/shared/store/cart/cart.state';
 import { Observable } from 'rxjs';
+import { OrderService } from './../../../core/services/order.service';
 
 @Component({
   selector: 'app-catalog',
@@ -43,13 +44,16 @@ export class CatalogPage implements OnInit, AfterViewInit {
     public categoryUpdateModalComponent: ModalController,
     private gService: GestureService,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private oService: OrderService
   ) { }
 
   ngOnInit() {
     this.getCatalog();
     this.cart$.subscribe(cart => this.cart = cart);
+    this.getFirstOrder();
   }
+
 
   ngAfterViewInit() {
     this.gService.createGesture(this.page, (detail) => {
@@ -62,6 +66,10 @@ export class CatalogPage implements OnInit, AfterViewInit {
   getCatalog() {
     this.pService.read().subscribe(data => this.catalog = data);
   };
+
+  getFirstOrder() {
+    this.oService.readFirst().subscribe(id => this.store.dispatch(new LoadCart(id)));
+  }
 
   async presentProductAddModal() {
     const modal = await this.addProductModalController.create({
