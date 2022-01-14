@@ -56,7 +56,10 @@ export class CartPage implements OnInit {
     this.amountFormGroup.get('amount').valueChanges.subscribe((x) => {
       this.ngZone.run(() => this.amountPayback = x - this.totalPrice);
     });
-    this.selectedOrder = 1;
+  }
+
+  setSelectedOrder(order: OrderIndexModel) {
+    this.oService.setSelectedOrder(order);
   }
 
   getTotalPrice() {
@@ -109,9 +112,9 @@ export class CartPage implements OnInit {
           this.orders.push(o);
         }
       });
-      if(this.orders.length) {
-        this.loadCartFromOrder(this.orders[0].id);
-      }
+      this.oService.getSelectedOrder().subscribe((os) => {
+        this.selectedOrder = os ? this.orders.findIndex((e) => e.id === os?.id) + 1 : 1;
+      });
     });
   };
 

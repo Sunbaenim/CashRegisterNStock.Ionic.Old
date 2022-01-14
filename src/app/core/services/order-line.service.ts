@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { OrderLineAddModel } from '../models/order-line/order-line-add.model';
 import { OrderLineIndexModel } from '../models/order-line/order-line-index.model';
@@ -24,6 +25,7 @@ export class OrderLineService {
   };
 
   getByOrderId(orderId: number) {
+    if(!orderId) {return of(null);}
     return this.client.get<[OrderLineIndexModel]>(this.orderLineUrl + orderId);
   }
 

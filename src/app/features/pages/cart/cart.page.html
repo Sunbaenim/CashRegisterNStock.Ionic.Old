@@ -5,7 +5,7 @@
         <ion-icon name="arrow-back" routerLink=""></ion-icon>
       </div>
       <div id="order-list">
-        <div class="order" *ngFor="let order of orders; let i = index" (click)="selectedOrder = i + 1; loadCartFromOrder(order.id)"
+        <div class="order" *ngFor="let order of orders; let i = index" (click)="loadCartFromOrder(order.id); setSelectedOrder(order)"
         [ngStyle]="{'background-color': selectedOrder === i + 1 ? '#3880ff' : 'white', 'color': selectedOrder === i + 1 ? 'white' : 'black'}">
           <p>{{i + 1}}</p>
         </div>

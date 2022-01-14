@@ -12,17 +12,27 @@ import { BehaviorSubject } from 'rxjs';
 export class OrderService {
 
   orderUrl: string = environment.apiUrl + 'order/';
-  firstOrderId$: BehaviorSubject<number>;
+  private firstOrderId$: BehaviorSubject<number>;
+  private selectedOrder$: BehaviorSubject<OrderIndexModel>;
 
   constructor(
     private client: HttpClient
   ) {
     this.firstOrderId$ = new BehaviorSubject<number>(null);
+    this.selectedOrder$ = new BehaviorSubject<OrderIndexModel>(null);
   }
 
   create(form: OrderAddModel) {
     return this.client.post(this.orderUrl, form);
   };
+
+  getSelectedOrder() {
+    return this.selectedOrder$.asObservable();
+  }
+
+  setSelectedOrder(order: OrderIndexModel) {
+    this.selectedOrder$.next(order);
+  }
 
   read() {
     return this.client.get<[OrderIndexModel]>(this.orderUrl);

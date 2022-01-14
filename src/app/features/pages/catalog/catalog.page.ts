@@ -51,7 +51,6 @@ export class CatalogPage implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getCatalog();
     this.cart$.subscribe(cart => this.cart = cart);
-    this.getFirstOrder();
   }
 
 
@@ -66,10 +65,6 @@ export class CatalogPage implements OnInit, AfterViewInit {
   getCatalog() {
     this.pService.read().subscribe(data => this.catalog = data);
   };
-
-  getFirstOrder() {
-    this.oService.readFirst().subscribe(id => this.store.dispatch(new LoadCart(id)));
-  }
 
   async presentProductAddModal() {
     const modal = await this.addProductModalController.create({
@@ -99,10 +94,8 @@ export class CatalogPage implements OnInit, AfterViewInit {
   }
 
   addToCart(product: ProductIndexModel) {
-    const order: OrderIndexModel = {
-      id: 1,
-      status: 0
-    };
+    let order: OrderIndexModel;
+    this.oService.getSelectedOrder().subscribe(o => order = o);
     const po: OrderLineIndexModel = {
       order,
       product,
@@ -113,7 +106,7 @@ export class CatalogPage implements OnInit, AfterViewInit {
   };
 
   existInCart(product: ProductIndexModel): boolean {
-    this.index = this.cart.findIndex(p => p.product.id === product.id);
+    this.index = this.cart?.findIndex(p => p.product.id === product.id);
     if (this.index >= 0) {return true;}
     else {return false;}
   };
