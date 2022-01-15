@@ -1,3 +1,13 @@
+ion-toolbar {
+  > ion-button {
+    position: absolute;
+    height: 40px;
+    left: calc(50% - (152px / 2));
+    top: 0;
+    margin: 2px;
+  }
+}
+
 #catalog {
   ion-grid {
     padding: 5%;

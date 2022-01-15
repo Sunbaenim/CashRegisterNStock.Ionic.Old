@@ -17,6 +17,8 @@ import { Select, Store } from '@ngxs/store';
 import { CartState } from 'src/app/shared/store/cart/cart.state';
 import { Observable } from 'rxjs';
 import { OrderService } from './../../../core/services/order.service';
+import { OrderAddModel } from './../../../core/models/order/order-add.model';
+import { Status } from 'src/app/core/models/enums/status.enum';
 
 @Component({
   selector: 'app-catalog',
@@ -114,5 +116,14 @@ export class CatalogPage implements OnInit, AfterViewInit {
   getQuantity(): number {
     return this.index >= 0 ? this.cart[this.index].quantity : null;
   };
+
+  addOrder() {
+    const newOrder: OrderAddModel = {status: Status.inProgress};
+    this.oService.create(newOrder).subscribe(o => {
+      const order: OrderIndexModel = o as OrderIndexModel;
+      this.oService.setSelectedOrder(order);
+      this.store.dispatch(new LoadCart(order.id));
+    });
+  }
 
 }
