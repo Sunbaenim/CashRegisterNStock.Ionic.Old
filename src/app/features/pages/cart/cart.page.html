@@ -20,7 +20,7 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="cart" id="cart">
+  <div *ngIf="cart" id="cart" #cartPage>
     <div class="product-container" *ngFor="let product of cart">
       <img src="{{baseUrl + product.product.imageURL}}"
         alt="Image de {{product.product.name}} {{product.product.description}}">
