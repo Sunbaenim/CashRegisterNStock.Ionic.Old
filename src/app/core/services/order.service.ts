@@ -51,4 +51,8 @@ export class OrderService {
     return this.client.put<OrderUpdateModel>(this.orderUrl + form.id, form);
   };
 
+  delete(id: number) {
+    return this.client.delete(this.orderUrl + id);
+  }
+
 }

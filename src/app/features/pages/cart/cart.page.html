@@ -1,15 +1,20 @@
 <ion-header>
   <ion-toolbar>
     <div id="toolbar">
-      <div id="toolbar-icons">
+      <div class="tool-icon">
         <ion-icon name="arrow-back" routerLink=""></ion-icon>
       </div>
       <div id="order-list" [ngStyle]="{'justify-content': orders.length <= 5 ? 'center' : 'flex-start'}">
-        <div class="order" *ngFor="let order of orders; let i = index" (click)="loadCartFromOrder(order.id); setSelectedOrder(order)"
+        <div class="order" *ngFor="let order of orders; let i = index"
+        (click)="orderDelete ? deleteOrder(order.id) : loadCartFromOrder(order)"
         [ngStyle]="{'background-color': selectedOrder === i + 1 ? '#3880ff' : 'white', 'color': selectedOrder === i + 1 ? 'white' : 'black'}">
           <p>{{i + 1}}</p>
         </div>
       </div>
+        <div class="tool-icon" (click)="orderDelete = !orderDelete">
+          <ion-icon name="remove-circle" *ngIf="orderDelete"></ion-icon>
+          <ion-icon name="remove-circle-outline" *ngIf="!orderDelete"></ion-icon>
+        </div>
     </div>
   </ion-toolbar>
 </ion-header>

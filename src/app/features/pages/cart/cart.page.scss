@@ -2,16 +2,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 20px;
   position: relative;
-  > #toolbar-icons {
+  .tool-icon {
     position: absolute;
-    left: 0;
+    &:first-child {
+      top: 15%;
+      left: 0;
+    }
+    &:last-child {
+      top: 15%;
+      right: -0;
+      color: #AB0000;
+    }
   }
   > #order-list {
     display: flex;
     max-width: 260px;
     overflow: scroll;
-
+    &::-webkit-scrollbar {
+      display: none;
+    }
     > .order {
       display: flex;
       justify-content: center;

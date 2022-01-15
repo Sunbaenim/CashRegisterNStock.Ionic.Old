@@ -32,6 +32,7 @@ export class CartPage implements OnInit {
   orders: OrderIndexModel[] = [];
   selectedOrder: number;
   firstOrderId: number;
+  orderDelete: boolean;
 
   constructor(
     private store: Store,
@@ -137,8 +138,17 @@ export class CartPage implements OnInit {
     });
   };
 
-  loadCartFromOrder(id: number) {
-    this.store.dispatch(new LoadCart(id));
+  loadCartFromOrder(order: OrderIndexModel) {
+    this.store.dispatch(new LoadCart(order.id));
+    this.setSelectedOrder(order);
   };
+
+  deleteOrder(id: number) {
+    this.oService.delete(id).subscribe(() => {
+      this.orders = [];
+      this.orderDelete = false;
+      this.getOrders();
+    });
+  }
 
 }
