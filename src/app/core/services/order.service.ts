@@ -47,6 +47,10 @@ export class OrderService {
     return this.firstOrderId$.asObservable();
   }
 
+  getById(id: number) {
+    return this.client.get<OrderIndexModel>(this.orderUrl + id);
+  }
+
   update(form: OrderUpdateModel) {
     return this.client.put<OrderUpdateModel>(this.orderUrl + form.id, form);
   };

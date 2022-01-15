@@ -15,6 +15,9 @@ export class AppComponent {
     private store: Store,
     private oService: OrderService
   ) {
-      this.oService.readFirst().subscribe(o => this.store.dispatch(new LoadCart(o)));
+      this.oService.readFirst().subscribe(o => {
+        this.store.dispatch(new LoadCart(o));
+        this.oService.getById(o).subscribe((result) => this.oService.setSelectedOrder(result));
+      });
     }
 }
