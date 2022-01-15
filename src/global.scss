@@ -38,6 +38,10 @@ ion-toolbar {
   }
 }
 
+.custom-toast {
+  --width: 120px
+}
+
 form {
   display: flex;
   flex-direction: column;

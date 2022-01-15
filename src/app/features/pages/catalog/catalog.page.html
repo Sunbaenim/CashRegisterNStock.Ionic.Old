@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-icon name="person-sharp" (click)="userLevel = 'Admin'"></ion-icon>
-    <ion-button class="order" (click)="addOrder()">Nouvelle commande</ion-button>
+    <ion-button *ngIf="userLevel !== 'Admin'" class="order" (click)="addOrder()">Nouvelle commande</ion-button>
   </ion-toolbar>
 </ion-header>
 

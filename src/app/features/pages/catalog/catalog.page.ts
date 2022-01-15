@@ -19,6 +19,7 @@ import { Observable } from 'rxjs';
 import { OrderService } from './../../../core/services/order.service';
 import { OrderAddModel } from './../../../core/models/order/order-add.model';
 import { Status } from 'src/app/core/models/enums/status.enum';
+import { ToastService } from './../../../core/services/toast.service';
 
 @Component({
   selector: 'app-catalog',
@@ -47,7 +48,8 @@ export class CatalogPage implements OnInit, AfterViewInit {
     private gService: GestureService,
     private router: Router,
     private store: Store,
-    private oService: OrderService
+    private oService: OrderService,
+    private toastService: ToastService
   ) { }
 
   ngOnInit() {
@@ -119,10 +121,15 @@ export class CatalogPage implements OnInit, AfterViewInit {
 
   addOrder() {
     const newOrder: OrderAddModel = {status: Status.inProgress};
-    this.oService.create(newOrder).subscribe(o => {
+    this.oService.create(newOrder).subscribe({
+      next: o => {
       const order: OrderIndexModel = o as OrderIndexModel;
       this.oService.setSelectedOrder(order);
       this.store.dispatch(new LoadCart(order.id));
+      this.toastService.customToast('Succès', 'dark', 1000, 'top');
+      }, error: () => {
+        this.toastService.customToast('Erreur', 'danger', 1000, 'top');
+      }
     });
   }
 

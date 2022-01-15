@@ -31,4 +31,16 @@ export class ToastService {
     });
     toast.present();
   }
+
+  async customToast(messageDisplay: string, color: string, duration: number, position: 'top' | 'bottom' | 'middle') {
+    const toast = await this.toastController.create({
+      message: messageDisplay,
+      duration,
+      cssClass: 'custom-toast',
+      icon: 'checkmark-sharp',
+      color,
+      position
+    });
+    toast.present();
+  }
 }
