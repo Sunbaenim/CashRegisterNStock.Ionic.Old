@@ -14,9 +14,10 @@ const routes: Routes = [
   {
     path: 'cart',
     loadChildren: () => import('./features/pages/cart/cart.module').then( m => m.CartPageModule)
-  },  {
-    path: 'cart',
-    loadChildren: () => import('./features/pages/cart/cart.module').then( m => m.CartPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./features/pages/login/login.module').then( m => m.LoginPageModule)
   }
 
 

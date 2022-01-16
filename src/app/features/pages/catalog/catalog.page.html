@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-icon name="person-sharp" (click)="userLevel = 'Admin'"></ion-icon>
-    <ion-button *ngIf="userLevel !== 'Admin'" class="order" (click)="addOrder()">Nouvelle commande</ion-button>
+    <ion-icon name="person-sharp" *ngIf="!isConnected()" (click)="login()"></ion-icon>
+    <ion-icon *ngIf="isConnected()" name="power" (click)="logout()"></ion-icon>
+    <ion-icon name="build" *ngIf="isConnected()" (click)="changePanel()"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -10,12 +11,12 @@
     <ion-grid>
       <ion-row *ngFor="let category of catalog">
         <ion-row class="category" *ngIf="category.products.length !== 0">
-          <ion-col (click)="userLevel === 'Admin' ? presentUpdateCategoryModal(category) : null">
+          <ion-col (click)="adminMode ? presentUpdateCategoryModal(category) : null">
             <span class="category-name">{{category.name}}</span>
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col [appPress]=product class="product-container" *ngFor="let product of category.products" (click)="userLevel === 'Admin' ? presentUpdateProductModal(product) : addToCart(product)">
+          <ion-col [appPress]=product class="product-container" *ngFor="let product of category.products" (click)="adminMode ? presentUpdateProductModal(product) : addToCart(product)">
             <div class="product" [ngStyle]="{'background-image': 'url(' + baseUrl + product.imageURL + ')'}">
               <div class="overlay"></div>
               <div class="product-banner">
@@ -28,9 +29,9 @@
                     </div>
               </div>
             </div>
-            <div class="circle" *ngIf="userLevel === 'Admin' ? true : existInCart(product)"
-              [ngStyle]="{'background-color': userLevel === 'Admin' ? product.stock < 20 ? 'red' : product.stock < 35 && product.stock >= 20 ? 'orange' : 'green' : '#3880ff'}">
-              <p>{{userLevel === 'Admin' ? product.stock : getQuantity()}}</p>
+            <div class="circle" *ngIf="adminMode ? true : existInCart(product)"
+              [ngStyle]="{'background-color': adminMode ? product.stock < 20 ? 'red' : product.stock < 35 && product.stock >= 20 ? 'orange' : 'green' : '#3880ff'}">
+              <p>{{adminMode ? product.stock : getQuantity()}}</p>
             </div>
           </ion-col>
         </ion-row>
@@ -38,7 +39,7 @@
     </ion-grid>
   </div>
 
-  <ion-fab *ngIf="userLevel === 'Admin'" (click)="presentProductAddModal()" horizontal="end" vertical="bottom" slot="fixed">
+  <ion-fab *ngIf="adminMode" (click)="presentProductAddModal()" horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button color="danger">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

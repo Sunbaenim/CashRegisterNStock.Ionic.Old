@@ -20,6 +20,8 @@ import { OrderService } from './../../../core/services/order.service';
 import { OrderAddModel } from './../../../core/models/order/order-add.model';
 import { Status } from 'src/app/core/models/enums/status.enum';
 import { ToastService } from './../../../core/services/toast.service';
+import { Storage } from '@ionic/storage-angular';
+import { AuthService } from './../../../core/services/auth.service';
 
 @Component({
   selector: 'app-catalog',
@@ -34,7 +36,8 @@ export class CatalogPage implements OnInit, AfterViewInit {
   catalog: CategoryIndexModel[];
   baseUrl: string = environment.baseUrl;
 
-  userLevel: string;
+  connected: boolean;
+  adminMode: boolean;
   isModalOpen: boolean;
 
   cart: OrderLineIndexModel[];
@@ -49,7 +52,9 @@ export class CatalogPage implements OnInit, AfterViewInit {
     private router: Router,
     private store: Store,
     private oService: OrderService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private storage: Storage,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -131,6 +136,28 @@ export class CatalogPage implements OnInit, AfterViewInit {
         this.toastService.customToast('Erreur', 'danger', 1000, 'top');
       }
     });
+  }
+
+  login() {
+    this.router.navigateByUrl('/login');
+  }
+
+  async changePanel() {
+    const token = await this.storage.get('TOKEN');
+    if(token) {
+      this.adminMode = !this.adminMode;
+    }
+  }
+
+  logout() {
+    this.connected = false;
+    this.adminMode = false;
+    this.storage.remove('TOKEN');
+    this.authService.logout();
+  }
+
+  isConnected(): boolean {
+    return this.authService.isConnected();
   }
 
 }

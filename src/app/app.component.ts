@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { CategoryService } from 'src/app/core/services/category.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
 import { OrderService } from './core/services/order.service';
 import { LoadCart } from './shared/store/cart/cart.actions';
 
@@ -9,12 +9,21 @@ import { LoadCart } from './shared/store/cart/cart.actions';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   constructor(
-    private categoryService: CategoryService,
     private store: Store,
+    private storage: Storage,
     private oService: OrderService
   ) {
       this.oService.readFirst().subscribe(o => this.store.dispatch(new LoadCart(o)));
     }
+
+  ngOnInit(): void {
+    this.storage.create();
+  }
+
+  ngOnDestroy(): void {
+    this.storage.remove('TOKEN');
+  }
+
 }
