@@ -2,7 +2,7 @@ import { Component, OnChanges, OnInit, SimpleChanges, NgZone, AfterViewInit, Vie
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Status } from 'src/app/core/models/enums/status.enum';
 import { OrderLineIndexModel } from 'src/app/core/models/order-line/order-line-index.model';
 import { OrderService } from 'src/app/core/services/order.service';
@@ -35,7 +35,7 @@ export class CartPage implements OnInit, AfterViewInit {
   orders: OrderIndexModel[] = [];
   selectedOrder: number;
   firstOrderId: number;
-  orderDelete: boolean;
+  subscription: Subscription;
 
   constructor(
     private store: Store,
@@ -122,6 +122,7 @@ export class CartPage implements OnInit, AfterViewInit {
   }
 
   getOrders() {
+    this.orders = [];
     this.oService.read().subscribe((data) => {
       data.map((o) => {
         if (o.status.toString() === 'InProgress') {
@@ -158,11 +159,39 @@ export class CartPage implements OnInit, AfterViewInit {
     this.setSelectedOrder(order);
   };
 
-  deleteOrder(id: number) {
-    this.oService.delete(id).subscribe(() => {
-      this.orders = [];
-      this.orderDelete = false;
-      this.getOrders();
+  async presentDeleteOrderAlert() {
+    const alert = await this.alertController.create({
+      header: 'Supprimer la commande',
+      cssClass: 'delete-alert',
+      buttons: [
+        {
+          text: 'Annuler',
+          handler: () => {
+            this.alertController.dismiss();
+          }
+        },
+        {
+          text: 'Valider',
+          handler: () => {
+            this.deleteOrder();
+            this.alertController.dismiss();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
+    alert.onDidDismiss().then(() => {
+      this.subscription.unsubscribe();
+    });
+  }
+
+  deleteOrder() {
+    this.subscription = this.oService.getSelectedOrder().subscribe(os => {
+      this.oService.delete(os.id).subscribe(() => {
+        this.getOrders();
+      });
     });
   }
 
