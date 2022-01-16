@@ -42,6 +42,13 @@ ion-toolbar {
   --width: 120px
 }
 
+.delete-alert {
+  button.alert-button:last-child {
+    background: #AB0000;
+    color: white;
+  }
+}
+
 form {
   display: flex;
   flex-direction: column;

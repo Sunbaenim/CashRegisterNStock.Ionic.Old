@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from './../../../core/services/product.service';
 import { CategoryIndexModel } from './../../../core/models/category/category-index.model';
 import { environment } from './../../../../environments/environment';
@@ -54,12 +54,16 @@ export class CatalogPage implements OnInit, AfterViewInit {
     private oService: OrderService,
     private toastService: ToastService,
     private storage: Storage,
-    private authService: AuthService
+    private authService: AuthService,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     this.getCatalog();
-    this.cart$.subscribe(cart => this.cart = cart);
+    this.cart$.subscribe(cart => {
+      this.cart = cart;
+      this.cd.detectChanges();
+    });
   }
 
 
