@@ -190,7 +190,13 @@ export class CartPage implements OnInit, AfterViewInit {
   deleteOrder() {
     this.subscription = this.oService.getSelectedOrder().subscribe(os => {
       this.oService.delete(os.id).subscribe(() => {
-        this.getOrders();
+        this.orders = this.orders.filter(o => os.id !== o.id);
+        if(this.orders.length) {
+          this.loadCartFromOrder(this.orders[this.orders.length - 1]);
+        }
+        else {
+          this.oService.create({status: Status.inProgress}).subscribe(() => this.getOrders());
+        }
       });
     });
   }
