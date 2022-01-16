@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon name="arrow-back" routerLink=""></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form id="login-form" [formGroup]="loginFormGroup" (ngSubmit)="submit()">
+
+    <ion-input formControlName="username" placeholder="Identifiant"></ion-input>
+    <ion-input formControlName="password" type="password" placeholder="Mot de passe"></ion-input>
+
+    <ion-button type="submit" [disabled]="loginFormGroup.invalid">Se connecter</ion-button>
+
+  </form>
+</ion-content>

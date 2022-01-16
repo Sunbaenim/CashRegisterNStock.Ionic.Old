@@ -16,6 +16,8 @@ import { AddProduct } from 'src/app/shared/store/cart/cart.actions';
 import { Select, Store } from '@ngxs/store';
 import { CartState } from 'src/app/shared/store/cart/cart.state';
 import { Observable } from 'rxjs';
+import { Storage } from '@ionic/storage-angular';
+import { AuthService } from './../../../core/services/auth.service';
 
 @Component({
   selector: 'app-catalog',
@@ -30,7 +32,8 @@ export class CatalogPage implements OnInit, AfterViewInit {
   catalog: CategoryIndexModel[];
   baseUrl: string = environment.baseUrl;
 
-  userLevel: string;
+  connected: boolean;
+  adminMode: boolean;
   isModalOpen: boolean;
 
   cart: OrderLineIndexModel[];
@@ -43,7 +46,9 @@ export class CatalogPage implements OnInit, AfterViewInit {
     public categoryUpdateModalComponent: ModalController,
     private gService: GestureService,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private storage: Storage,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -113,5 +118,27 @@ export class CatalogPage implements OnInit, AfterViewInit {
   getQuantity(): number {
     return this.index >= 0 ? this.cart[this.index].quantity : null;
   };
+
+  login() {
+    this.router.navigateByUrl('/login');
+  }
+
+  async changePanel() {
+    const token = await this.storage.get('TOKEN');
+    if(token) {
+      this.adminMode = !this.adminMode;
+    }
+  }
+
+  logout() {
+    this.connected = false;
+    this.adminMode = false;
+    this.storage.remove('TOKEN');
+    this.authService.logout();
+  }
+
+  isConnected(): boolean {
+    return this.authService.isConnected();
+  }
 
 }

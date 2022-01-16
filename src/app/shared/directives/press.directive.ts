@@ -22,7 +22,9 @@ export class PressDirective {
     private zone: NgZone,
     private store: Store
     ) {
-      this.createPressGesture();
+      if(this.product) {
+        this.createPressGesture();
+      }
     }
 
     createPressGesture() {
