@@ -3,6 +3,7 @@
     <ion-icon name="person-sharp" *ngIf="!isConnected()" (click)="login()"></ion-icon>
     <ion-icon *ngIf="isConnected()" name="power" (click)="logout()"></ion-icon>
     <ion-icon name="build" *ngIf="isConnected()" (click)="changePanel()"></ion-icon>
+    <ion-button (click)="addOrder()">Nouvelle commande</ion-button>
   </ion-toolbar>
 </ion-header>
 

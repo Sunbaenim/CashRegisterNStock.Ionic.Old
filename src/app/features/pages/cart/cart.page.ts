@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges, NgZone, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, NgZone, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { Select, Store } from '@ngxs/store';
@@ -45,7 +45,8 @@ export class CartPage implements OnInit, AfterViewInit {
     private pService: ProductService,
     private ngZone: NgZone,
     private gService: GestureService,
-    private router: Router
+    private router: Router,
+    private cd: ChangeDetectorRef
     ) { }
 
     ngOnInit() {
@@ -66,8 +67,6 @@ export class CartPage implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.gService.createGesture(this.page, (detail) => {
-      console.log(detail.deltaX);
-      console.log(detail.currentX);
       if (detail.deltaX > 25 && detail.currentX < 100) {
         this.router.navigate(['/catalog']);
       }
@@ -143,8 +142,10 @@ export class CartPage implements OnInit, AfterViewInit {
   };
 
   confirmPayment() {
+    let orderSelected: OrderIndexModel;
+    this.oService.getSelectedOrder().subscribe(so => orderSelected = so);
     const order: OrderUpdateModel = {
-      id: 1,
+      id: orderSelected.id,
       status: Status.finished
     };
     this.oService.update(order).subscribe();
