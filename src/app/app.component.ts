@@ -15,7 +15,10 @@ export class AppComponent implements OnInit, OnDestroy {
     private storage: Storage,
     private oService: OrderService
   ) {
-      this.oService.readFirst().subscribe(o => this.store.dispatch(new LoadCart(o)));
+      this.oService.readFirst().subscribe(o => {
+        this.store.dispatch(new LoadCart(o));
+        this.oService.getById(o).subscribe((result) => this.oService.setSelectedOrder(result));
+      });
     }
 
   ngOnInit(): void {
